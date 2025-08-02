@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-// Vertex shader (3D, renkli)
+// Vertex shader (3D, colored)
 const char *vertexShaderSource = R"(
 #version 330 core
 layout(location = 0) in vec3 aPos;
@@ -108,12 +108,12 @@ int main(int argc, char *argv[]) {
 
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
-    // Küp vertexleri (pozisyon ve renk) 36 vertex (6 yüz * 2 üçgen * 3 vertex)
+    // Cube vertices (position and color), 36 vertices (6 faces * 2 triangles * 3 vertices)
     float vertices[] = {
         // Positions          // Colors
-        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, // kırmızı
-        0.5f,  -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // yeşil
-        0.5f,  0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, // mavi
+        -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, // red
+        0.5f,  -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // green
+        0.5f,  0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, // blue
         0.5f,  0.5f,  -0.5f, 0.0f, 0.0f, 1.0f, -0.5f, 0.5f,  -0.5f, 1.0f, 1.0f, 0.0f, -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f,
 
         -0.5f, -0.5f, 0.5f,  1.0f, 0.0f, 1.0f, // magenta
@@ -121,10 +121,10 @@ int main(int argc, char *argv[]) {
         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, // white
         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 1.0f, -0.5f, 0.5f,  0.5f,  0.5f, 0.5f, 0.5f, -0.5f, -0.5f, 0.5f,  1.0f, 0.0f, 1.0f,
 
-        -0.5f, 0.5f,  0.5f,  1.0f, 0.5f, 0.0f,                                        // turuncu
-        -0.5f, 0.5f,  -0.5f, 0.0f, 0.5f, 1.0f,                                        // mavi
-        -0.5f, -0.5f, -0.5f, 0.5f, 1.0f, 0.5f,                                        // yeşil
-        -0.5f, -0.5f, -0.5f, 0.5f, 1.0f, 0.5f, -0.5f, -0.5f, 0.5f,  0.3f, 0.3f, 0.3f, // gri
+        -0.5f, 0.5f,  0.5f,  1.0f, 0.5f, 0.0f, // orange
+        -0.5f, 0.5f,  -0.5f, 0.0f, 0.5f, 1.0f, // blue
+        -0.5f, -0.5f, -0.5f, 0.5f, 1.0f, 0.5f, // green
+        -0.5f, -0.5f, -0.5f, 0.5f, 1.0f, 0.5f, -0.5f, -0.5f, 0.5f,  0.3f, 0.3f, 0.3f, // grey
         -0.5f, 0.5f,  0.5f,  1.0f, 0.5f, 0.0f,
 
         0.5f,  0.5f,  0.5f,  0.6f, 0.4f, 0.2f, 0.5f,  0.5f,  -0.5f, 0.2f, 0.6f, 0.4f, 0.5f,  -0.5f, -0.5f, 0.4f, 0.2f, 0.6f, 0.5f, -0.5f, -0.5f, 0.4f, 0.2f, 0.6f, 0.5f,  -0.5f, 0.5f, 0.7f, 0.7f, 0.2f, 0.5f,  0.5f,  0.5f,  0.6f, 0.4f, 0.2f,
@@ -143,17 +143,17 @@ int main(int argc, char *argv[]) {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    // Pozisyon
+    // Position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-    // Renk
+    // Color attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    glEnable(GL_DEPTH_TEST); // Derinlik testi açık, 3D için gerekli
+    glEnable(GL_DEPTH_TEST); // Enable depth test for 3D rendering
 
     bool running = true;
     SDL_Event event;

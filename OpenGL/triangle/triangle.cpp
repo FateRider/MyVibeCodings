@@ -5,7 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 
-// Shader kaynak kodları
+// Shader source code
 const char *vertexShaderSource = R"(
 #version 330 core
 layout(location = 0) in vec3 aPos;
@@ -99,24 +99,29 @@ int main(int argc, char *argv[]) {
 
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
+           // Triangle vertex positions
     float vertices[] = {
-        0.0f,  0.5f,  0.0f, // top
-        -0.5f, -0.5f, 0.0f, // bottom left
-        0.5f,  -0.5f, 0.0f  // bottom right
+        0.0f,  0.5f,  0.0f, // top vertex
+        -0.5f, -0.5f, 0.0f, // bottom left vertex
+        0.5f,  -0.5f, 0.0f  // bottom right vertex
     };
 
     GLuint VBO, VAO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
+           // Bind VAO to store vertex attribute configuration
     glBindVertexArray(VAO);
 
+           // Bind VBO and upload vertex data
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+           // Define vertex attribute layout for position (location = 0)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
 
+           // Unbind buffers for safety
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
@@ -128,24 +133,31 @@ int main(int argc, char *argv[]) {
             if (event.type == SDL_QUIT) running = false;
         }
 
+               // Clear the screen with a dark color
         glClearColor(0.1f, 0.2f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
+               // Calculate rotation angle based on time
         float timeValue = SDL_GetTicks() / 1000.0f;
 
+               // Create transformation matrix: rotation around Z axis
         glm::mat4 transform = glm::mat4(1.0f);
         transform = glm::rotate(transform, timeValue, glm::vec3(0.0f, 0.0f, 1.0f));
 
+               // Pass transformation matrix to the shader
         GLuint transformLoc = glGetUniformLocation(shaderProgram, "transform");
         glUseProgram(shaderProgram);
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
+               // Draw the triangle
         glBindVertexArray(VAO);
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
+               // Swap buffers to display
         SDL_GL_SwapWindow(window);
     }
 
+           // Cleanup resources
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
