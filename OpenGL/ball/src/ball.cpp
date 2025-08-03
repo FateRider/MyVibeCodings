@@ -15,24 +15,24 @@ struct Ball {
     float r, g, b;
 };
 
-// Global top listesi
+// Global list of balls
 std::vector<Ball> balls;
 
-// Rastgele float üretimi
+// Generate a random float between min and max
 float randFloat(float min, float max) { return min + ((float)rand() / (float)(RAND_MAX)) * (max - min); }
 
-// Renk değiştir
+// Change the color of a ball randomly
 void randomizeColor(Ball &b) {
     b.r = randFloat(0.2f, 1.0f);
     b.g = randFloat(0.2f, 1.0f);
     b.b = randFloat(0.2f, 1.0f);
 }
 
-// Çizim (kenarlıklı)
+// Draw the ball with a border
 void drawBall(const Ball &b) {
     const int segments = 64;
 
-    // Border
+    // Border (black circle slightly larger than ball)
     glColor3f(0.0f, 0.0f, 0.0f);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(b.x, b.y);
@@ -42,7 +42,7 @@ void drawBall(const Ball &b) {
     }
     glEnd();
 
-    // Fill
+    // Fill (colored circle)
     glColor3f(b.r, b.g, b.b);
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(b.x, b.y);
@@ -71,7 +71,7 @@ int main() {
     glOrtho(-1, 1, -1, 1, -1, 1);
     glMatrixMode(GL_MODELVIEW);
 
-    // İlk top
+    // Add the first ball
     balls.push_back({0.0f, 0.0f, 0.01f, 0.007f, 0.05f, 1.0f, 0.0f, 0.0f});
 
     while (!glfwWindowShouldClose(window)) {
@@ -85,6 +85,7 @@ int main() {
 
             bool bounced = false;
 
+            // Check collisions with window borders
             if (b.x + b.radius > 1.0f) {
                 b.x = 1.0f - b.radius;
                 b.vx *= -1;
@@ -105,12 +106,12 @@ int main() {
                 bounced = true;
             }
 
-            // Çarpma olduysa:
+            // If a bounce occurred:
             if (bounced) {
-                randomizeColor(b); // renk değiştir
+                randomizeColor(b); // change ball color
                 fflush(stdout);
 
-                // Sınırı geçmediyse ve limit dolmadıysa yeni top ekle
+                // If ball count is within limit, create a new ball
                 if (balls.size() + newBalls.size() < MAX_BALLS) {
                     Ball newBall;
                     newBall.x = b.x;
@@ -127,6 +128,7 @@ int main() {
             drawBall(b);
         }
 
+        // Add new balls to the main list
         balls.insert(balls.end(), newBalls.begin(), newBalls.end());
 
         glfwSwapBuffers(window);
