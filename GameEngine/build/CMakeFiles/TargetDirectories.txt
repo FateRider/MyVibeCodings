@@ -1,0 +1,3 @@
+/mnt/D/VibeCoding/GameEngine/build/CMakeFiles/GameEngine.dir
+/mnt/D/VibeCoding/GameEngine/build/CMakeFiles/edit_cache.dir
+/mnt/D/VibeCoding/GameEngine/build/CMakeFiles/rebuild_cache.dir

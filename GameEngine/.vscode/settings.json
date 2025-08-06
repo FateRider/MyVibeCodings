@@ -1,0 +1,7 @@
+{
+    "clangd.pathFallback": "clangd",
+    "clangd.path": "/usr/bin/clangd",
+    "clangd.arguments": [
+        "--resource-dir=/usr/lib/clang/20/"
+    ]
+}

@@ -1,0 +1,38 @@
+[
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/Engine.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/Engine.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/Engine.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/Engine.cpp.o"
+},
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/Input.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/Input.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/Input.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/Input.cpp.o"
+},
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/Object.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/Object.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/Object.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/Object.cpp.o"
+},
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/Physics.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/Physics.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/Physics.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/Physics.cpp.o"
+},
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/Renderer.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/Renderer.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/Renderer.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/Renderer.cpp.o"
+},
+{
+  "directory": "/mnt/D/VibeCoding/GameEngine/build",
+  "command": "/usr/bin/clang++ -I/mnt/D/VibeCoding/GameEngine/src -g -std=gnu++17 -o CMakeFiles/GameEngine.dir/src/main.cpp.o -c /mnt/D/VibeCoding/GameEngine/src/main.cpp",
+  "file": "/mnt/D/VibeCoding/GameEngine/src/main.cpp",
+  "output": "CMakeFiles/GameEngine.dir/src/main.cpp.o"
+}
+]
