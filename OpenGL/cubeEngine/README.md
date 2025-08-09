@@ -19,7 +19,6 @@ This project demonstrates a simple 3D scene using OpenGL with SDL2 and GLM. It f
 
 - **Mouse Wheel**: Zoom in/out by changing the camera's field of view (FOV).
 - **Window Resize**: The rendering viewport and projection adjust automatically.
-
 ---
 
 ## Dependencies
