@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Snake</title>
+<style>
+  body {
+    margin: 0;
+    background: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+    font-family: sans-serif;
+  }
+  #gameArea {
+    width: 400px;
+    height: 400px;
+    background: #333;
+    position: relative;
+    border: 3px solid #fff;
+  }
+  .snake {
+    width: 20px;
+    height: 20px;
+    background: lime;
+    position: absolute;
+  }
+  .food {
+    width: 20px;
+    height: 20px;
+    background: red;
+    position: absolute;
+  }
+  #winMessage {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 32px;
+    color: yellow;
+    display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="gameArea">
+  <div id="winMessage">Kazandın!</div>
+</div>
+
+<script>
+const gameArea = document.getElementById('gameArea');
+const winMessage = document.getElementById('winMessage');
+const gridSize = 20;
+const gameWidth = 400;
+const gameHeight = 400;
+const maxCells = (gameWidth / gridSize) * (gameHeight / gridSize);
+
+let snake = [{x: 200, y: 200}];
+let dx = gridSize;
+let dy = 0;
+let foods = spawnFoods(5);
+
+document.addEventListener('keydown', changeDirection);
+let gameInterval = setInterval(gameLoop, 100);
+
+function spawnFoods(count) {
+  let result = [];
+  for(let i = 0; i < count; i++) {
+    let x = Math.floor(Math.random() * (gameWidth/gridSize)) * gridSize;
+    let y = Math.floor(Math.random() * (gameHeight/gridSize)) * gridSize;
+    result.push({x, y});
+  }
+  return result;
+}
+
+function changeDirection(e) {
+  if(e.key === "ArrowUp" && dy === 0) { dx = 0; dy = -gridSize; }
+  if(e.key === "ArrowDown" && dy === 0) { dx = 0; dy = gridSize; }
+  if(e.key === "ArrowLeft" && dx === 0) { dx = -gridSize; dy = 0; }
+  if(e.key === "ArrowRight" && dx === 0) { dx = gridSize; dy = 0; }
+}
+
+function gameLoop() {
+  // Yeni kafa pozisyonu
+  let headX = snake[0].x + dx;
+  let headY = snake[0].y + dy;
+
+  // Wrap around
+  if(headX < 0) headX = gameWidth - gridSize;
+  if(headX >= gameWidth) headX = 0;
+  if(headY < 0) headY = gameHeight - gridSize;
+  if(headY >= gameHeight) headY = 0;
+
+  const head = {x: headX, y: headY};
+  snake.unshift(head);
+
+  // Yem kontrolü
+  for(let i = foods.length - 1; i >= 0; i--) {
+    if(head.x === foods[i].x && head.y === foods[i].y) {
+      foods.splice(i, 1);
+      break;
+    }
+  }
+
+  // Eğer yem yoksa yılan pop() yapmaz, yani uzamış olur
+  if(foods.length === 0 && snake.length < maxCells) {
+    // Yem yok, yılan kendiliğinden hareket ediyor
+  } else if (foods.length === 0 && snake.length >= maxCells) {
+    // Tüm alan kaplandı
+    winMessage.style.display = 'block';
+    clearInterval(gameInterval);
+  } else {
+    snake.pop();
+  }
+
+  draw();
+}
+
+function draw() {
+  gameArea.innerHTML = '';
+  gameArea.appendChild(winMessage);
+
+  // draw snake
+  snake.forEach(segment => {
+    const snakeElement = document.createElement('div');
+    snakeElement.style.left = segment.x + 'px';
+    snakeElement.style.top = segment.y + 'px';
+    snakeElement.classList.add('snake');
+    gameArea.appendChild(snakeElement);
+  });
+
+  // draw foods
+  foods.forEach(food => {
+    const foodElement = document.createElement('div');
+    foodElement.style.left = food.x + 'px';
+    foodElement.style.top = food.y + 'px';
+    foodElement.classList.add('food');
+    gameArea.appendChild(foodElement);
+  });
+}
+</script>
+
+</body>
+</html>
